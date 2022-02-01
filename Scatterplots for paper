@@ -1,0 +1,202 @@
+```{r}
+path = setwd("C:/Users/bikra/Desktop/writing thesis/monthly averaged SPI")
+df <- read.csv("basin averaged monthly spi complete.csv")
+dim(df)
+head(df)
+```
+
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+p <- ggscatter(df, y = "GPCC.SPI12", x = "MERRA.SPI12", color = "black", size = .1) + geom_point() + stat_smooth(method = "lm",
+        color = "black", shape = 21, size = 1,
+        se = FALSE,
+        cor.coef = TRUE,
+        cex = 0.11,)+ 
+  #stat_regline_equation(label.x = -1, label.y = 2, color = "black", face = "bold", size = 4) + 
+  theme_light() + stat_cor(method = "pearson", label.x = -2, label.y = 1.6, face = "bold", size = 4) + 
+  scale_x_continuous(breaks = seq(-3, 3, by = 1)) +
+  xlab("(e) MERRA 12-month SPI") + 
+  ylab("GPCC 12-month SPI") + 
+    scale_y_continuous(breaks = seq(-2, 2, by = 1))
+p <- p +coord_fixed()
+
+p +
+ font("xlab", size = 14, color = "black", face = "bold")+
+ font("ylab", size = 14, color = "black", face = "bold")+
+ font("xy.text", size = 14, color = "black", face = "bold")
+```
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+q <- ggscatter(df, y = "GPCC.SPI6", x = "MERRA.SPI6", color = "black", size = .1) + geom_point() + stat_smooth(method = "lm",
+        color = "black", shape = 21, size = 1,
+        se = FALSE,
+        cor.coef = TRUE,
+        cex = 0.11,)+ 
+  #stat_regline_equation(label.x = -1, label.y = 2, color = "black", face = "bold", size = 4) + 
+  theme_light() + stat_cor(method = "pearson", label.x = , label.y = 1.6, face = "bold", size = 4) + 
+  scale_x_continuous(breaks = seq(-3, 3, by = 1)) +
+  xlab("(f) MERRA 6-month SPI") + 
+  ylab("GPCC 6-month SPI") + 
+    scale_y_continuous(breaks = seq(-2, 2, by = 1))
+q <- q +coord_fixed()
+
+q +
+ font("xlab", size = 14, color = "black", face = "bold")+
+ font("ylab", size = 14, color = "black", face = "bold")+
+ font("xy.text", size = 14, color = "black", face = "bold")
+```
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+r <- ggscatter(df, y = "GPCC.SPI3", x = "MERRA.SPI3", color = "black", size = .1) + geom_point() + stat_smooth(method = "lm",
+        color = "black", shape = 21, size = 1,
+        se = FALSE,
+        cor.coef = TRUE,
+        cex = 0.11,)+ 
+  #stat_regline_equation(label.x = -1, label.y = 2, color = "black", face = "bold", size = 4) + 
+  theme_light() + stat_cor(method = "pearson", label.x = -2, label.y = 1.5, face = "bold", size = 4) + 
+  scale_x_continuous(breaks = seq(-3, 3, by = 1)) +
+  xlab("(g) MERRA 3-month SPI") + 
+  ylab("GPCC 3-month SPI") + 
+    scale_y_continuous(breaks = seq(-2, 2, by = 1))
+r <- r +coord_fixed()
+
+r +
+ font("xlab", size = 14, color = "black", face = "bold")+
+ font("ylab", size = 14, color = "black", face = "bold")+
+ font("xy.text", size = 14, color = "black", face = "bold")
+```
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+s <- ggscatter(df, y = "GPCC.SPI1", x = "MERRA.SPI1", color = "black", size = .1) + geom_point() + stat_smooth(method = "lm",
+        color = "black", shape = 21, size = 1,
+        se = FALSE,
+        cor.coef = TRUE,
+        cex = 0.11,)+ 
+  #stat_regline_equation(label.x = -1, label.y = 2, color = "black", face = "bold", size = 4) + 
+  theme_light() + stat_cor(method = "pearson", label.x = -2, label.y = 1.9, face = "bold", size = 4) + 
+  scale_x_continuous(breaks = seq(-3, 3, by = 1)) +
+  xlab("(h) MERRA 1-month SPI") + 
+  ylab("GPCC 1-month SPI") + 
+    scale_y_continuous(breaks = seq(-2, 2, by = 1))
+s <- s +coord_fixed()
+
+s +
+ font("xlab", size = 14, color = "black", face = "bold")+
+ font("ylab", size = 14, color = "black", face = "bold")+
+ font("xy.text", size = 14, color = "black", face = "bold")
+```
+
+```{r}
+ggarrange(p, q,r, s)
+```
+
+## GPCC Vs. CDR
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+p <- ggscatter(df, y = "GPCC.SPI12", x = "CDR.SPI12", color = "black", size = .1) + geom_point() + stat_smooth(method = "lm",
+        color = "black", shape = 21, size = 1,
+        se = FALSE,
+        cor.coef = TRUE,
+        cex = 0.11,)+ 
+  #stat_regline_equation(label.x = -1, label.y = 2, color = "black", face = "bold", size = 4) + 
+  theme_light() + stat_cor(method = "pearson", label.x = -2, label.y = 1.4, face = "bold", size = 4) + 
+  scale_x_continuous(breaks = seq(-3, 3, by = 1)) +
+  xlab("(a) CDR 12-month SPI") + 
+  ylab("GPCC 12-month SPI") + 
+    scale_y_continuous(breaks = seq(-2, 2, by = 1))
+p <- p +coord_fixed()
+
+p +
+ font("xlab", size = 14, color = "black", face = "bold")+
+ font("ylab", size = 14, color = "black", face = "bold")+
+ font("xy.text", size = 14, color = "black", face = "bold")
+```
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+q <- ggscatter(df, y = "GPCC.SPI6", x = "CDR.SPI6", color = "black", size = .1) + geom_point() + stat_smooth(method = "lm",
+        color = "black", shape = 21, size = 1,
+        se = FALSE,
+        cor.coef = TRUE,
+        cex = 0.11,)+ 
+  #stat_regline_equation(label.x = -1, label.y = 2, color = "black", face = "bold", size = 4) + 
+  theme_light() + stat_cor(method = "pearson", label.x = -2, label.y = 1.4, face = "bold", size = 4) + 
+  scale_x_continuous(breaks = seq(-3, 3, by = 1)) +
+  xlab("(b) CDR 6-month SPI") + 
+  ylab("GPCC 6-month SPI") + 
+    scale_y_continuous(breaks = seq(-2, 2, by = 1))
+q <- q +coord_fixed()
+
+q +
+ font("xlab", size = 14, color = "black", face = "bold")+
+ font("ylab", size = 14, color = "black", face = "bold")+
+ font("xy.text", size = 14, color = "black", face = "bold")
+```
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+r <- ggscatter(df, y = "GPCC.SPI3", x = "CDR.SPI3", color = "black", size = .1) + geom_point() + stat_smooth(method = "lm",
+        color = "black", shape = 21, size = 1,
+        se = FALSE,
+        cor.coef = TRUE,
+        cex = 0.11,)+ 
+  #stat_regline_equation(label.x = -1, label.y = 2, color = "black", face = "bold", size = 4) + 
+  theme_light() + stat_cor(method = "pearson", label.x = -2, label.y = 1.5, face = "bold", size = 4) + 
+  scale_x_continuous(breaks = seq(-3, 3, by = 1)) +
+  xlab("(c) CDR 3-month SPI") + 
+  ylab("GPCC 3-month SPI") + 
+    scale_y_continuous(breaks = seq(-2, 2, by = 1))
+r <- r +coord_fixed()
+
+r +
+ font("xlab", size = 14, color = "black", face = "bold")+
+ font("ylab", size = 14, color = "black", face = "bold")+
+ font("xy.text", size = 14, color = "black", face = "bold")
+```
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+s <- ggscatter(df, y = "GPCC.SPI1", x = "CDR.SPI1", color = "black", size = .1) + geom_point() + stat_smooth(method = "lm",
+        color = "black", shape = 21, size = 1,
+        se = FALSE,
+        cor.coef = TRUE,
+        cex = 0.11,)+ 
+  #stat_regline_equation(label.x = -1, label.y = 2, color = "black", face = "bold", size = 4) + 
+  theme_light() + stat_cor(method = "pearson", label.x = -2, label.y =2.5, face = "bold", size = 4) + 
+  scale_x_continuous(breaks = seq(-3, 3, by = 1)) +
+  xlab("(d) CDR 1-month SPI") + 
+  ylab("GPCC 1-month SPI") + 
+    scale_y_continuous(breaks = seq(-2, 2, by = 1))
+s <- s +coord_fixed()
+
+s +
+ font("xlab", size = 24, color = "black", face = "bold")+
+ font("ylab", size = 24, color = "black", face = "bold")+
+ font("xy.text", size = 24, color = "black", face = "bold")
+```
+
+```{r}
+ggarrange(p, q,r, s)
+```
+
