@@ -1,0 +1,122 @@
+
+##Comparing precipitation products.
+
+```{r}
+path = setwd("C:/Users/bikra/Desktop/Thesis_Final/Comparison/csv")
+for file in path,
+  print(files)
+df <- read.csv("2000+correlation calculated.csv")
+dim(df)
+```
+## CDR
+```{r}
+Q1 <- quantile(df$GPCC, .25, na.rm = TRUE)
+Q3 <- quantile(df$GPCC, .75, na.rm = TRUE)
+IQR <- IQR(df$GPCC, na.rm = TRUE)
+Q1C <- quantile(df$CDR, .25, na.rm = TRUE)
+Q3C <- quantile(df$CDR, .75, na.rm = TRUE)
+IQRC <- IQR(df$CDR, na.rm = TRUE)
+df1<- subset(df, df$GPCC > (Q1 - 1.5*IQR) & df$GPCC< (Q3 + 1.5*IQR) & df$CDR< (Q3C + 1.5*IQRC) & df$CDR > (Q1C - 1.5*IQRC))
+dim(df)
+dim(df1)
+library(Metrics)
+correlation = cor(df1$GPCC,df1$CDR)
+correlation
+correlation*correlation
+cor.test(df1$GPCC,df1$CDR)$p.value
+mae(df1$GPCC, df1$CDR)
+rmse(df1$GPCC, df1$CDR)
+MBE <- sum(df1$CDR - df1$GPCC)
+MBE/435
+```
+##css
+```{r}
+Q1 <- quantile(df1$GPCC, .25, na.rm = TRUE)
+Q3 <- quantile(df1$GPCC, .75, na.rm = TRUE)
+IQR <- IQR(df1$GPCC, na.rm = TRUE)
+Q1C <- quantile(df1$CSS, .25, na.rm = TRUE)
+Q3C <- quantile(df1$CSS, .75, na.rm = TRUE)
+IQRC <- IQR(df1$CSS, na.rm = TRUE)
+df2<- subset(df1, df1$GPCC > (Q1 - 1.5*IQR) & df1$GPCC< (Q3 + 1.5*IQR) & df1$CSS< (Q3C + 1.5*IQRC) & df1$CSS > (Q1C - 1.5*IQRC))
+dim(df)
+dim(df1)
+dim(df2)
+library(Metrics)
+correlation = cor(df1$GPCC,df1$CSS)
+correlation
+correlation*correlation
+cor.test(df1$GPCC,df1$CSS)$p.value
+mae(df1$GPCC, df1$CSS)
+rmse(df1$GPCC, df1$CSS)
+MBE <- sum(df1$CSS - df1$GPCC)
+MBE/405
+write.csv(df2,"C:/Users/bikra/Desktop/Thesis_Final/triple collocation/2000+TC.csv", row.names = FALSE)
+```
+
+## IMERG
+```{r}
+Q1 <- quantile(df$GPCC, .25, na.rm = TRUE)
+Q3 <- quantile(df$GPCC, .75, na.rm = TRUE)
+IQR <- IQR(df$GPCC, na.rm = TRUE)
+Q1C <- quantile(df$IMERG, .25, na.rm = TRUE)
+Q3C <- quantile(df$IMERG, .75, na.rm = TRUE)
+IQRC <- IQR(df$IMERG, na.rm = TRUE)
+df1<- subset(df, df$GPCC > (Q1 - 1.5*IQR) & df$GPCC< (Q3 + 1.5*IQR) & df$IMERG< (Q3C + 1.5*IQRC) & df$IMERG > (Q1C - 1.5*IQRC))
+dim(df)
+dim(df1)
+library(Metrics)
+correlation = cor(df1$GPCC,df1$IMERG)
+correlation
+correlation*correlation
+cor.test(df1$GPCC,df1$IMERG)$p.value
+mae(df1$GPCC, df1$IMERG)
+rmse(df1$GPCC, df1$IMERG)
+MBE <- sum(df1$IMERG - df1$GPCC)
+MBE/406
+```
+
+
+## MERRA
+```{r}
+Q1 <- quantile(df$GPCC, .25, na.rm = TRUE)
+Q3 <- quantile(df$GPCC, .75, na.rm = TRUE)
+IQR <- IQR(df$GPCC, na.rm = TRUE)
+Q1C <- quantile(df$MERRA, .25, na.rm = TRUE)
+Q3C <- quantile(df$MERRA, .75, na.rm = TRUE)
+IQRC <- IQR(df$MERRA, na.rm = TRUE)
+df1<- subset(df, df$GPCC > (Q1 - 1.5*IQR) & df$GPCC< (Q3 + 1.5*IQR) & df$MERRA< (Q3C + 1.5*IQRC) & df$MERRA > (Q1C - 1.5*IQRC))
+dim(df)
+dim(df1)
+library(Metrics)
+correlation = cor(df1$GPCC,df1$MERRA)
+correlation
+correlation*correlation
+cor.test(df1$GPCC,df1$MERRA)$p.value
+mae(df1$GPCC, df1$MERRA)
+rmse(df1$GPCC, df1$MERRA)
+MBE <- sum(df1$MERRA - df1$GPCC)
+MBE/422
+```
+
+
+## TRMM
+```{r}
+Q1 <- quantile(df$GPCC, .25, na.rm = TRUE)
+Q3 <- quantile(df$GPCC, .75, na.rm = TRUE)
+IQR <- IQR(df$GPCC, na.rm = TRUE)
+Q1C <- quantile(df$TRMM, .25, na.rm = TRUE)
+Q3C <- quantile(df$TRMM, .75, na.rm = TRUE)
+IQRC <- IQR(df$TRMM, na.rm = TRUE)
+df1<- subset(df, df$GPCC > (Q1 - 1.5*IQR) & df$GPCC< (Q3 + 1.5*IQR) & df$TRMM< (Q3C + 1.5*IQRC) & df$TRMM > (Q1C - 1.5*IQRC))
+dim(df)
+dim(df1)
+library(Metrics)
+correlation = cor(df1$GPCC,df1$TRMM)
+correlation
+correlation*correlation
+cor.test(df1$GPCC,df1$TRMM)$p.value
+mae(df1$GPCC, df1$TRMM)
+rmse(df1$GPCC, df1$TRMM)
+MBE <- sum(df1$TRMM - df1$GPCC)
+MBE/423
+```
