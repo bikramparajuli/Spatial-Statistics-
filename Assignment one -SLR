@@ -1,0 +1,116 @@
+---
+title: "Simple Linear Regression"
+author: "Bikram Parajuli"
+date: "25/05/2020"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+A simple linear regression model has one independent variable. 
+i.e. 
+Y=α+βX+ϵ
+
+A simulated data set is used here to perfprm simple linear regression. It includes following points;
+##1. Generating simulated data:
+To generate simulated data, following model was assumed: 
+Y=0.5+0.8X+ϵ    
+```{r}
+x <- rnorm(200)
+y <- 0.5 + 0.8*x + rnorm(200)
+```
+
+This dataset will now be used to estimate the intercept and slope. Lets see the relationship between x and y before fitting the linear model. Generating histograms for x and y, we can see the normal distribution of y. And by plotting x and y, linear relationship between x and y is ensured. 
+
+
+```{r}
+hist(x)
+hist(y)
+plot(x,y,pch=20,bty='n')
+
+```
+## 2. Fitting the linear model
+Next step is to fit the linear model using function lm. 
+```{r}
+lm01 <- lm(y~x)
+```
+The intercept and slope are calculated as;
+
+```{r}
+a <- coef(lm01)[1]
+cat('Intercept a =',a)
+b <- coef(lm01)[2]
+cat('Slope b =',b)
+```
+After calculating intercept and slope, standard error for the intercept and slope is calculated. Least square root of diagonal element of variance-covariance matrix is used to get standard errors.
+
+```{r}
+vcov(lm01)
+sa <-sqrt(vcov(lm01)[1,1])
+cat('SE(a)=',sa)
+sb <-sqrt(vcov(lm01)[2,2])
+cat('SE(b)=',sb)
+```
+
+t statistics can now be calculated with the coefficients of the standard errors. 
+
+```{r}
+ta <- a/sa
+ta
+tb<- b/sb
+tb
+```
+t scores give the number of standard deviations above the mean of t under the null hypothesis. Now function pt is used to calculate p value for a given t score with specific degree of freedom. Degree of freedom is equal to the difference between the sample size and the number of parameters to estimate. 
+
+
+```{r}
+p.value1 = 2*pt(-abs(ta), df=length(y)-2)
+p.value1
+p.value2 = 2*pt(-abs(tb), df=length(y)-2)
+p.value2
+```
+
+Null hypothesis can also be tested with the confidence interval. confit calculates 95% confidence interval. 
+
+```{r}
+confint(lm01)
+```
+## Interpretation
+The intercept is the expected value of y when the value of x is zero. And the slope, 0.7539417, means y increases by 0.7539417 per 1 unit increase in x. 
+
+## Model Fit
+
+
+```{r}
+tss <- sum((y-mean(y))^2)
+rss <- sum((y-lm01$fitted)^2)
+r2 <- 1-rss/tss
+r2
+summary(lm01)
+```
+Here the variable x explains 36 percent of variation in the dependent variable y. 
+
+## Prediction Error
+LOOCV is used to access the testing error of the model. It estimates n models, each time holding one data point for testing. 
+```{r}
+library(boot)
+glm01 <- glm(y~x)
+data_tab <- as.data.frame(cbind(x,y))
+cv.error <- cv.glm(data_tab,glm01)
+cv.error$delta[1]
+```
+
+```{r}
+rss/200
+```
+The testing error is greater than training error because training error uses all dataset to estimate the model. 
+
+```{r}
+plot(x,y,pch=20,bty='n')
+abline(lm01,col='red')
+```
